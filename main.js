@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import './style.css'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
+import * as dat from 'dat.gui';
 
 ////scene
 const scene = new THREE.Scene();
@@ -31,17 +31,27 @@ scene.background = texture;
 ///planeGeometry texture
 const planetexture = new THREE.TextureLoader().load( './assets/color.jpg' );
 
-// Create BoxGeometry
+// Create planeGeometry
 const planeGeometry = new THREE.PlaneGeometry(7, 7 , 7 , 7);
 const planeMaterial = new THREE.MeshBasicMaterial({ 
-    color: 0xff0000 ,
+     color : 0xffea00 ,
     side: THREE.DoubleSide,
     // wireframe :true,
-    map:planetexture, 
+    // map:planetexture, 
 });
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 scene.add(planeMesh);
 
+const gui = new dat.GUI();
+
+const options = {
+    planeColor : '#ffea00'  
+};
+
+gui.addColor(options , 'planeColor').onChange(function(e){
+    planeMesh.material.color.set(e);
+
+});
 
 ///sphereGeometry texture
 const spheretexture = new THREE.TextureLoader().load( './assets/earth.jpeg' );
@@ -58,7 +68,6 @@ const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphereMesh.position.x = 9;
 scene.add(sphereMesh);
 
-
 ///sphereGeometry texture
 const Torustexture = new THREE.TextureLoader().load( './assets/donut.jpeg' );
 
@@ -72,6 +81,8 @@ const TorusMaterial = new THREE.MeshBasicMaterial({
 const TorusMesh = new THREE.Mesh(TorusGeometry, TorusMaterial);
 TorusMesh.position.x = -9
 scene.add(TorusMesh);
+
+
 
 
 
